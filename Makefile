@@ -194,7 +194,7 @@ UPROGS=\
 	$U/_wc\
 	$U/_zombie\
 	$U/_sleep\
-
+	$U/_sysinfotest\
 
 ifeq ($(LAB),util)
 UPROGS += \
