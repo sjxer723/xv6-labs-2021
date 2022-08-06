@@ -194,12 +194,20 @@ UPROGS=\
 	$U/_wc\
 	$U/_zombie\
 	$U/_sleep\
+	$U/_sysinfotest\
+
+ifeq ($(LAB),util)
+UPROGS += \
 	$U/_pingpong\
 	$U/_find\
 	$U/_xargs\
-	$U/_primes\
+	$U/_primes
+endif
 
-
+ifeq ($(LAB),syscall)
+UPROGS += \
+	$U/_trace
+endif
 
 ifeq ($(LAB),$(filter $(LAB), pgtbl lock))
 UPROGS += \
