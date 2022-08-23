@@ -7,6 +7,7 @@
 
 K=kernel
 U=user
+T=testcases
 
 OBJS = \
   $K/entry.o \
@@ -195,6 +196,7 @@ UPROGS=\
 	$U/_zombie\
 	$U/_sleep\
 	$U/_sysinfotest\
+	$U/_strace\
 
 ifeq ($(LAB),util)
 UPROGS += \
@@ -271,9 +273,13 @@ ifeq ($(LAB),util)
 	UEXTRA += user/xargstest.sh
 endif
 
+TPROGS = $T/test
 
-fs.img: mkfs/mkfs README $(UEXTRA) $(UPROGS)
-	mkfs/mkfs fs.img README $(UEXTRA) $(UPROGS)
+$(TPROGS): %: $T/test.c 
+	$(CC) -o $@ $<
+
+fs.img: mkfs/mkfs README $(UEXTRA) $(UPROGS) $(TPROGS)
+	mkfs/mkfs fs.img README $(UEXTRA) $(UPROGS) $(TPROGS)
 
 -include kernel/*.d user/*.d
 
@@ -284,6 +290,7 @@ clean:
 	mkfs/mkfs .gdbinit \
         $U/usys.S \
 	$(UPROGS) \
+	$(TPROGS) \
 	ph barrier
 
 # try to generate a unique GDB port

@@ -145,6 +145,7 @@ int
 main(void)
 {
   static char buf[100];
+  static char test[100] = {"strace test\n"};
   int fd;
 
   // Ensure that three file descriptors are open.
@@ -155,6 +156,10 @@ main(void)
     }
   }
 
+  if(fork1() == 0)
+      runcmd(parsecmd(test));
+  wait(0);
+  
   // Read and run input commands.
   while(getcmd(buf, sizeof(buf)) >= 0){
     if(buf[0] == 'c' && buf[1] == 'd' && buf[2] == ' '){
