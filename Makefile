@@ -7,7 +7,6 @@
 
 K=kernel
 U=user
-T=testcases
 
 OBJS = \
   $K/entry.o \
@@ -92,7 +91,7 @@ LD = $(TOOLPREFIX)ld
 OBJCOPY = $(TOOLPREFIX)objcopy
 OBJDUMP = $(TOOLPREFIX)objdump
 
-CFLAGS = -Wall -Werror -O -fno-omit-frame-pointer -ggdb
+CFLAGS = -Wall -O -fno-omit-frame-pointer -ggdb
 
 ifdef LAB
 LABUPPER = $(shell echo $(LAB) | tr a-z A-Z)
@@ -196,7 +195,7 @@ UPROGS=\
 	$U/_zombie\
 	$U/_sleep\
 	$U/_sysinfotest\
-	$U/_strace\
+	$U/_test\
 
 ifeq ($(LAB),util)
 UPROGS += \
@@ -262,7 +261,6 @@ UPROGS += \
 endif
 
 
-
 ifeq ($(LAB),net)
 UPROGS += \
 	$U/_nettests
@@ -273,13 +271,9 @@ ifeq ($(LAB),util)
 	UEXTRA += user/xargstest.sh
 endif
 
-TPROGS = $T/test
 
-$(TPROGS): %: $T/test.c 
-	$(CC) -o $@ $<
-
-fs.img: mkfs/mkfs README $(UEXTRA) $(UPROGS) $(TPROGS)
-	mkfs/mkfs fs.img README $(UEXTRA) $(UPROGS) $(TPROGS)
+fs.img: mkfs/mkfs README $(UEXTRA) $(UPROGS) 
+	mkfs/mkfs fs.img README $(UEXTRA) $(UPROGS) 
 
 -include kernel/*.d user/*.d
 

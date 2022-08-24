@@ -23,3 +23,5 @@ submissions/
 ph
 barrier
 testcases/*
+user/test.c
+user/io.inc

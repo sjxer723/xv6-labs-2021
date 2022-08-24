@@ -145,7 +145,7 @@ int
 main(void)
 {
   static char buf[100];
-  static char test[100] = {"strace test\n"};
+  static char test[100] = {"trace 2147483647 test\n"};
   int fd;
 
   // Ensure that three file descriptors are open.
